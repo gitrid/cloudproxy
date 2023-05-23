@@ -1,4 +1,5 @@
 import os
+from loguru import logger
 from cloudproxy.providers import settings
 
 
@@ -13,5 +14,5 @@ def set_auth(username, password):
         else:
             filedata = filedata.replace("username", username)
             filedata = filedata.replace("password", password)
-    print(filedata)
+    logger.info(filedata)
     return filedata
