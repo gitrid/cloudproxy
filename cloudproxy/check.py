@@ -1,4 +1,5 @@
 import requests as requests
+from loguru import logger
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 from cloudproxy.providers import settings
@@ -52,6 +53,8 @@ def fetch_ip(ip_address):
 def check_alive(ip_address):
     try:
         result = requests.get("http://" + ip_address + ":8899", timeout=3)
+        logger.info(f'check_alive request: {"http://" + ip_address + ":8899"}')
+        logger.info(f'check_alive result: {result}')
         if result.status_code in (200, 407):
             return True
         else:
