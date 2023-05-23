@@ -52,13 +52,10 @@ def fetch_ip(ip_address):
 
 def check_alive(ip_address):
     try:
-        logger.info(f'check_alive request: {"http://" + ip_address + ":8899"}')
-        result = requests.get("http://" + ip_address + ":8899", timeout=3)
-        logger.info(f'check_alive result: {result}')
+        result = requests.get("http://ipecho.net/plain", proxies={'http': "http://" + ip_address + ":8899"}, timeout=3)
         if result.status_code in (200, 407):
             return True
         else:
             return False
-    except Exception as e:
-        logger.info(f"An error in check_alive occurred: {e}")
+    except:
         return False
