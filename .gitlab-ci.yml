@@ -1,0 +1,20 @@
+stages:
+  - build
+  - push
+
+build_image:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker build -t cloudproxy .
+
+push_image:
+  stage: push
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker tag cloudproxy 192.168.68.11:32768/cloudproxy
+    - docker push 192.168.68.11:32768/cloudproxy
