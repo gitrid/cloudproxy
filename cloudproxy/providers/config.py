@@ -1,4 +1,5 @@
 import os
+from cloudproxy.providers import settings
 
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
@@ -7,6 +8,9 @@ __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file
 def set_auth(username, password):
     with open(os.path.join(__location__, "user_data.sh")) as file:
         filedata = file.read()
-        filedata = filedata.replace("username", username)
-        filedata = filedata.replace("password", password)
+        if settings.config["no_auth"]:
+            filedata = filedata.replace("sudo sed -i 's/#BasicAuth user pass.*/BasicAuth username password/g' /etc/tinyproxy/tinyproxy.conf", "")
+        else:
+            filedata = filedata.replace("username", username)
+            filedata = filedata.replace("password", password)
     return filedata
