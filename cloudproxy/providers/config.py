@@ -1,4 +1,5 @@
 import os
+from loguru import logger
 from cloudproxy.providers import settings
 
 
@@ -6,12 +7,14 @@ __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file
 
 
 def set_auth(username, password):
-    with open(os.path.join(__location__, "user_data.sh")) as file:
-        filedata = file.read()
-        if settings.config["no_auth"]:
-            filedata = filedata.replace("sudo sed -i 's/#BasicAuth user pass.*/BasicAuth username password/g' /etc/tinyproxy/tinyproxy.conf", "")
-        else:
+    if settings.config["no_auth"]:
+        with open(os.path.join(__location__, "user_data_no_auth.sh")) as file:
+            filedata = file.read()
+    else:
+        with open(os.path.join(__location__, "user_data.sh")) as file:
+            filedata = file.read()
             filedata = filedata.replace("username", username)
             filedata = filedata.replace("password", password)
-    print(filedata)
+
+    logger.info(filedata)
     return filedata
