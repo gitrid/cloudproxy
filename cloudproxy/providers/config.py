@@ -13,4 +13,5 @@ def set_auth(username, password):
         else:
             filedata = filedata.replace("username", username)
             filedata = filedata.replace("password", password)
+    print(filedata)
     return filedata
