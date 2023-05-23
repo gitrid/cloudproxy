@@ -18,7 +18,6 @@ def set_auth(username, password):
 
     if settings.config["only_host_ip"]:
         ip_address = requests.get('https://ipecho.net/plain').text.strip()
-        filedata = filedata.replace("Allow ONLYHOSTIP", f"Allow {ip_address}")
         filedata = filedata.replace("ufw allow 22/tcp", f"sudo ufw allow from {ip_address} to any port 22 proto tcp")
         filedata = filedata.replace("ufw allow 8899/tcp", f"sudo ufw allow from {ip_address} to any port 8899 proto tcp")
 
