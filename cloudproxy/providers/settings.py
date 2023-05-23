@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 
 config = {
     "auth": {"username": "", "password": ""},
+    "no_auth": False,
     "age_limit": 0,
     "providers": {
         "digitalocean": {
@@ -55,6 +56,7 @@ load_dotenv()
 config["auth"]["username"] = os.environ.get("USERNAME", "changeme")
 config["auth"]["password"] = os.environ.get("PASSWORD", "changeme")
 config["age_limit"] = int(os.environ.get('AGE_LIMIT', 0))
+config["no_auth"] = config["auth"]["username"] == "changeme" and config["auth"]["password"] == "changeme"
 
 # Set DigitalOcean config
 config["providers"]["digitalocean"]["enabled"] = os.environ.get(
