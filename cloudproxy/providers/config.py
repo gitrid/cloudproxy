@@ -9,7 +9,7 @@ def set_auth(username, password):
     with open(os.path.join(__location__, "user_data.sh")) as file:
         filedata = file.read()
         if settings.config["no_auth"]:
-            filedata = filedata.replace("sudo sed -i 's/#BasicAuth user pass.*/BasicAuth username password/g' /etc/tinyproxy/tinyproxy.conf", "")
+            filedata = filedata.replace("sudo sed -i 's/#BasicAuth user pass.*/BasicAuth username password/g' /etc/tinyproxy/tinyproxy.conf\n", "")
         else:
             filedata = filedata.replace("username", username)
             filedata = filedata.replace("password", password)
