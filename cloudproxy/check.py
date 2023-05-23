@@ -60,5 +60,5 @@ def check_alive(ip_address):
         else:
             return False
     except Exception as e:
-        print(f"An error occurred: {e}")
+        logger.info(f"An error in check_alive occurred: {e}")
         return False
