@@ -52,12 +52,13 @@ def fetch_ip(ip_address):
 
 def check_alive(ip_address):
     try:
-        result = requests.get("http://" + ip_address + ":8899", timeout=3)
         logger.info(f'check_alive request: {"http://" + ip_address + ":8899"}')
+        result = requests.get("http://" + ip_address + ":8899", timeout=3)
         logger.info(f'check_alive result: {result}')
         if result.status_code in (200, 407):
             return True
         else:
             return False
-    except:
+    except Exception as e:
+        logger.info(f"An error in check_alive occurred: {e}")
         return False
