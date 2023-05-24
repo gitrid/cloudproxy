@@ -69,6 +69,7 @@ For example:
    ```shell
    docker run -e USERNAME='CHANGE_THIS_USERNAME' \
        -e PASSWORD='CHANGE_THIS_PASSWORD' \
+       -e ONLY_HOST_IP=True \
        -e DIGITALOCEAN_ENABLED=True \
        -e DIGITALOCEAN_ACCESS_TOKEN='YOUR SECRET ACCESS KEY' \
        -it -p 8000:8000 laffin/cloudproxy:latest
