@@ -7,14 +7,15 @@ __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file
 
 
 def set_auth(username, password):
+    
+    with open(os.path.join(__location__, "user_data.sh")) as file:
+        filedata = file.read()
+
     if settings.config["no_auth"]:
-        with open(os.path.join(__location__, "user_data_no_auth.sh")) as file:
-            filedata = file.read()
+        filedata = filedata.replace("\nsudo sed -i 's/#BasicAuth user pass.*/BasicAuth username password/g' /etc/tinyproxy/tinyproxy.conf", "")
     else:
-        with open(os.path.join(__location__, "user_data.sh")) as file:
-            filedata = file.read()
-            filedata = filedata.replace("username", username)
-            filedata = filedata.replace("password", password)
+        filedata = filedata.replace("username", username)
+        filedata = filedata.replace("password", password)
 
     if settings.config["only_host_ip"]:
         ip_address = requests.get('https://ipecho.net/plain').text.strip()

@@ -51,7 +51,13 @@ All you need is:
 
 #### Environment variables:
 
-- `USERNAME`, `PASSWORD` - set the username and password for the forward proxy. The username and password should be alphanumeric. Using special characters may cause issues due to how URL encoding works. If username and password are not set, proxies will not use authentication. Default: no authentication.
+##### Required
+You have two available methods of proxy authentication: username and password or IP restriction. You can use either one or both simultaneously.
+
+- `USERNAME`, `PASSWORD` - set the username and password for the forward proxy. The username and password should consist of alphanumeric characters. Using special characters may cause issues due to how URL encoding works.
+- `ONLY_HOST_IP` - set this variable to true if you want to restrict access to the proxy only to the host server (i.e., the IP address of the server running the CloudProxy Docker container).
+
+##### Optional
 - `AGE_LIMIT` - set the age limit for your forward proxies in seconds. Once the age limit is reached, the proxy is replaced. A value of 0 disables the feature. Default: disabled.
 
 See individual provider pages for environment variables required in above providers supported section.
@@ -63,6 +69,7 @@ For example:
    ```shell
    docker run -e USERNAME='CHANGE_THIS_USERNAME' \
        -e PASSWORD='CHANGE_THIS_PASSWORD' \
+       -e ONLY_HOST_IP=True \
        -e DIGITALOCEAN_ENABLED=True \
        -e DIGITALOCEAN_ACCESS_TOKEN='YOUR SECRET ACCESS KEY' \
        -it -p 8000:8000 laffin/cloudproxy:latest
