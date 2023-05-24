@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 
 config = {
     "auth": {"username": "", "password": ""},
+    "no_auth": False,
+    "only_host_ip": False,
     "age_limit": 0,
     "providers": {
         "digitalocean": {
@@ -55,6 +57,11 @@ load_dotenv()
 config["auth"]["username"] = os.environ.get("USERNAME", "changeme")
 config["auth"]["password"] = os.environ.get("PASSWORD", "changeme")
 config["age_limit"] = int(os.environ.get('AGE_LIMIT', 0))
+config["no_auth"] = config["auth"]["username"] == "changeme" and config["auth"]["password"] == "changeme"
+config["only_host_ip"] = os.environ.get("ONLY_HOST_IP", False)
+
+if config["no_auth"] and not config["only_host_ip"]:
+    raise ValueError("USERNAME, PASSWORD and ONLY_HOST_IP are not set up. Choose at least one authentication method and provide relevant variables.")
 
 # Set DigitalOcean config
 config["providers"]["digitalocean"]["enabled"] = os.environ.get(
